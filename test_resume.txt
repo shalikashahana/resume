@@ -1,0 +1,29 @@
+John Doe
+john.doe@example.com | +1-555-123-4567 | linkedin.com/in/johndoe
+
+Summary
+Passionate Full-Stack Software Engineer with 4 years of experience building scalable web applications and cloud microservices.
+
+Skills
+Python, FastAPI, JavaScript, React, Docker, AWS, PostgreSQL, Git, CI/CD, REST APIs, Linux, Kubernetes
+
+Experience
+Software Engineer | Acme Corp (2022 - Present)
+- Developed high-performance REST APIs using Python and FastAPI, increasing throughput by 35%.
+- Led a team of 4 engineers to migrate legacy services to Docker containers on AWS, reducing deployment downtime by 50%.
+- Optimized database queries in PostgreSQL, cutting average query latency by 40%.
+- Automated CI/CD pipelines with GitHub Actions, saving 10 hours of manual testing per week.
+
+Junior Developer | Tech Innovations (2020 - 2022)
+- Built responsive client dashboards using React and JavaScript for 25,000 active monthly users.
+- Designed reusable UI component libraries reducing frontend development cycle by 20%.
+- Spearheaded bug tracking and unit testing using pytest, achieving 92% code coverage.
+
+Projects
+Resume Villain AI Analyzer
+- Engineered an automated resume analysis platform with FastAPI, Gemini API, and pure Python ATS heuristic engine.
+- Implemented custom parsing pipelines handling thousands of requests daily with sub-second response times.
+
+Education
+Bachelor of Science in Computer Science | Tech University (2016 - 2020)
+
