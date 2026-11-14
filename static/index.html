@@ -595,6 +595,201 @@
       color: #475569;
       margin-top: 1rem;
     }
+
+    /* ── Coach Panel ── */
+    #coachPanel {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 360px;
+      max-height: 540px;
+      background: #12151f;
+      border: 1px solid #2d3748;
+      border-radius: 1rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.15);
+      display: none;
+      flex-direction: column;
+      z-index: 999;
+      overflow: hidden;
+    }
+
+    #coachPanel.open { display: flex; }
+
+    .coach-header {
+      background: linear-gradient(135deg, #1a1d2e, #21243a);
+      border-bottom: 1px solid #2d3748;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .coach-avatar {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--purple), var(--crimson));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .coach-header-text { flex: 1; }
+    .coach-header-text strong { display: block; font-size: 0.9rem; color: #e2e8f0; }
+    .coach-header-text span { font-size: 0.72rem; color: #64748b; }
+
+    #coachCloseBtn {
+      background: none; border: none; color: #64748b;
+      font-size: 1.1rem; cursor: pointer; padding: 0 0.2rem;
+      transition: color 0.15s;
+    }
+    #coachCloseBtn:hover { color: var(--crimson); }
+
+    .coach-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      scrollbar-width: thin;
+      scrollbar-color: #2d3748 transparent;
+    }
+
+    .coach-msg {
+      max-width: 90%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 0.75rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .coach-msg pre {
+      background: #090a0f;
+      border: 1px solid #2d3748;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #38bdf8;
+      position: relative;
+      white-space: pre;
+    }
+
+    .coach-msg .copy-code-btn {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .coach-msg .copy-code-btn:hover {
+      color: #fff;
+      background: #374151;
+      border-color: var(--purple);
+    }
+
+    .coach-msg.bot {
+      background: #1e2235;
+      border: 1px solid #2d3748;
+      color: #c8d3e8;
+      align-self: flex-start;
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .coach-msg.user {
+      background: linear-gradient(135deg, #4c1d95, #6d28d9);
+      color: #ede9fe;
+      align-self: flex-end;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    .coach-msg.typing {
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .coach-input-row {
+      border-top: 1px solid #2d3748;
+      padding: 0.7rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      background: #0f1118;
+    }
+
+    #coachInput {
+      flex: 1;
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 0.5rem;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      outline: none;
+      resize: none;
+      max-height: 90px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    #coachInput:focus { border-color: var(--purple); }
+    #coachInput::placeholder { color: #475569; }
+
+    #coachSendBtn {
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      border: none;
+      border-radius: 0.5rem;
+      color: white;
+      padding: 0.5rem 0.8rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    #coachSendBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+    #coachSendBtn:hover:not(:disabled) { opacity: 0.85; }
+
+    /* Floating trigger button */
+    #coachTrigger {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: linear-gradient(135deg, var(--purple), var(--crimson));
+      border: none;
+      border-radius: 999px;
+      color: white;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(139,92,246,0.4);
+      z-index: 998;
+      gap: 0.4rem;
+      display: none;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    #coachTrigger.visible { display: flex; }
+    #coachTrigger:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(139,92,246,0.55); }
+
+    @media (max-width: 600px) {
+      #coachPanel { width: calc(100vw - 2rem); right: 1rem; bottom: 4.5rem; }
+      #coachTrigger { bottom: 1rem; right: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -737,6 +932,36 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- AI Resume Coach Panel -->
+  <button id="coachTrigger" title="Open Resume Coach">
+    🎓 <span>Resume Coach</span>
+  </button>
+
+  <div id="coachPanel">
+    <div class="coach-header">
+      <div class="coach-avatar">🎓</div>
+      <div class="coach-header-text">
+        <strong>AI Resume Coach</strong>
+        <span>Ask me to fix anything from your resume</span>
+      </div>
+      <button id="coachCloseBtn" title="Close">✕</button>
+    </div>
+    <div class="coach-messages" id="coachMessages">
+      <div class="coach-msg bot">
+        👋 The villain roasted you — now let's <strong>fix it</strong>.<br><br>
+        Ask me things like:<br>
+        • "Fix my experience bullet points"<br>
+        • "Give me a better summary section"<br>
+        • "What action verbs should I use?"<br>
+        • "Rewrite my skills section for ATS"
+      </div>
+    </div>
+    <div class="coach-input-row">
+      <textarea id="coachInput" placeholder="Ask the coach..." rows="1"></textarea>
+      <button id="coachSendBtn" title="Send">➤</button>
+    </div>
   </div>
 
   <script>
@@ -1047,6 +1272,16 @@
 
       // Save verdict data and reset voice UI
       currentVerdictData = data;
+
+      // Update coach context with fresh resume data
+      coachContext = {
+        resume_text: data.resume_text || '',
+        ats_score: data.score || 0,
+        weak_points: data.weak_points || [],
+        strong_points: data.strong_points || [],
+        villain_message: data.message || ''
+      };
+      showCoachTrigger();
       if (villainAudio) {
         villainAudio.pause();
         villainAudio.src = '';
@@ -1128,6 +1363,11 @@
       voiceStatus.style.display = 'none';
       voiceErrorText.style.display = 'none';
       speakBtn.disabled = false;
+      if (coachPanel) coachPanel.classList.remove('open');
+      if (coachTrigger) {
+        coachTrigger.classList.remove('visible');
+        coachTrigger.style.display = 'none';
+      }
       resultSection.style.display = 'none';
       formCard.style.display = 'block';
     });
@@ -1156,6 +1396,125 @@
         shareBtn.disabled = false;
       }
     });
+    // ── AI Resume Coach ──
+    const coachTrigger = document.getElementById('coachTrigger');
+    const coachPanel   = document.getElementById('coachPanel');
+    const coachCloseBtn= document.getElementById('coachCloseBtn');
+    const coachMessages= document.getElementById('coachMessages');
+    const coachInput   = document.getElementById('coachInput');
+    const coachSendBtn = document.getElementById('coachSendBtn');
+
+    // Store resume context for coach
+    let coachContext = { resume_text: '', ats_score: 0, weak_points: [], strong_points: [], villain_message: '' };
+
+    function showCoachTrigger() {
+      coachTrigger.style.display = 'flex';
+      coachTrigger.classList.add('visible');
+    }
+
+    coachTrigger.addEventListener('click', () => {
+      coachTrigger.style.display = 'none';
+      coachPanel.classList.add('open');
+    });
+
+    coachCloseBtn.addEventListener('click', () => {
+      coachPanel.classList.remove('open');
+      coachTrigger.style.display = 'flex';
+    });
+
+    function appendCoachMsg(text, role) {
+      const div = document.createElement('div');
+      div.className = `coach-msg ${role}`;
+
+      if (role === 'bot' && text.includes('```')) {
+        // Parse code blocks
+        const parts = text.split(/(```[\s\S]*?```)/g);
+        div.innerHTML = '';
+        parts.forEach(part => {
+          if (part.startsWith('```') && part.endsWith('```')) {
+            const rawContent = part.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '').trim();
+            const pre = document.createElement('pre');
+            const code = document.createElement('code');
+            code.textContent = rawContent;
+            
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-code-btn';
+            copyBtn.textContent = '📋 Copy';
+            copyBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              navigator.clipboard.writeText(rawContent).then(() => {
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => { copyBtn.textContent = '📋 Copy'; }, 2000);
+              });
+            });
+
+            pre.appendChild(copyBtn);
+            pre.appendChild(code);
+            div.appendChild(pre);
+          } else if (part.trim()) {
+            const span = document.createElement('span');
+            span.textContent = part;
+            div.appendChild(span);
+          }
+        });
+      } else {
+        div.textContent = text;
+      }
+
+      coachMessages.appendChild(div);
+      coachMessages.scrollTop = coachMessages.scrollHeight;
+      return div;
+    }
+
+    async function sendCoachMessage() {
+      const msg = coachInput.value.trim();
+      if (!msg) return;
+
+      coachInput.value = '';
+      coachInput.style.height = 'auto';
+      appendCoachMsg(msg, 'user');
+
+      const typingDiv = appendCoachMsg('Coach is thinking...', 'bot typing');
+      coachSendBtn.disabled = true;
+
+      try {
+        const resp = await fetch('/api/coach', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_message: msg, ...coachContext })
+        });
+
+        const data = await resp.json();
+        typingDiv.remove();
+
+        if (!resp.ok) {
+          appendCoachMsg(data.detail || 'Something went wrong. Please try again.', 'bot');
+        } else {
+          appendCoachMsg(data.reply, 'bot');
+        }
+      } catch (err) {
+        typingDiv.remove();
+        appendCoachMsg('Could not reach the coach. Check your connection and try again.', 'bot');
+      } finally {
+        coachSendBtn.disabled = false;
+        coachInput.focus();
+      }
+    }
+
+    coachSendBtn.addEventListener('click', sendCoachMessage);
+    coachInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendCoachMessage();
+      }
+    });
+
+    // Auto-resize textarea
+    coachInput.addEventListener('input', () => {
+      coachInput.style.height = 'auto';
+      coachInput.style.height = Math.min(coachInput.scrollHeight, 90) + 'px';
+    });
+
   </script>
 </body>
 </html>

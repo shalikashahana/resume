@@ -186,7 +186,8 @@ async def analyze_resume(
         "real_tip": real_tips or [],
         "language": language,
         "villain_style": villain_style,
-        "level": valid_level
+        "level": valid_level,
+        "resume_text": extracted_text[:4000]  # for coach context
     }
 
 class SpeakRequest(BaseModel):
@@ -194,6 +195,62 @@ class SpeakRequest(BaseModel):
     language: str = "English"
     villain_style: str = "dramatic"
     level: str = "easy"
+
+
+class CoachRequest(BaseModel):
+    user_message: str
+    resume_text: str = ""
+    ats_score: int = 0
+    weak_points: list = []
+    strong_points: list = []
+    villain_message: str = ""
+
+
+@app.post("/api/coach")
+async def coach(req: CoachRequest):
+    if not req.user_message or not req.user_message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key or api_key == "your_gemini_api_key_here":
+        raise HTTPException(status_code=503, detail="AI coach is unavailable (no API key).")
+
+    system_prompt = (
+        "You are an expert AI Resume Coach and Assistant integrated into the right-side chat panel of a 'Resume Roaster' web application.\n"
+        "Your role is to assist the user in fixing the specific resume they just uploaded and roasted.\n\n"
+        "Guidelines for your responses:\n"
+        "1. TARGETED FEEDBACK: When the user asks for corrections or points to errors, clearly and concisely tell them what mistakes they made (e.g., grammatical errors, weak action verbs, lack of metrics).\n"
+        "2. DIRECT CONTENT GENERATION: When the user asks for the corrected version (e.g., 'give me the correct version', 'fix my resume', 'generate text'), provide ONLY the updated, professionally polished, ATS-friendly resume content.\n"
+        "3. COPY-PASTE READY: Format the final corrected content inside a clean markdown code block or plain text format so the user can easily copy and paste it directly into their resume template. Avoid unnecessary conversational filler when providing the final text block.\n"
+        "4. TONE: Be helpful, sharp, professional, and encouraging."
+    )
+
+    context = f"""RESUME TEXT (what the user uploaded):
+---
+{req.resume_text[:3000] if req.resume_text else "(not provided)"}
+---
+
+ATS SCORE: {req.ats_score}/100
+WEAK POINTS: {", ".join(req.weak_points) if req.weak_points else "none listed"}
+STRONG POINTS: {", ".join(req.strong_points) if req.strong_points else "none listed"}
+VILLAIN'S VERDICT: {req.villain_message[:400] if req.villain_message else "(not provided)"}
+
+USER ASKS: {req.user_message.strip()}"""
+
+    try:
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[
+                {"role": "user", "parts": [{"text": system_prompt + "\n\n" + context}]}
+            ]
+        )
+        return {"reply": response.text.strip()}
+    except Exception as e:
+        err_str = str(e).lower()
+        if "429" in err_str or "resource_exhausted" in err_str or "quota" in err_str:
+            raise HTTPException(status_code=429, detail="Coach is resting, try again in a minute.")
+        raise HTTPException(status_code=500, detail="Coach is unavailable right now. Please try again.")
 
 @app.post("/api/speak")
 def speak(req: SpeakRequest):
